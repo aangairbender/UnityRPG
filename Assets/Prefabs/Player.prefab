@@ -47,7 +47,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
+  m_AssetId: f1023a9ecec06dd4294c3361a0cc81e6
   hasSpawned: 0
 --- !u!114 &6407160218060001262
 MonoBehaviour:
@@ -63,5 +63,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  CharacterPrefab: {fileID: 1132850162230041329, guid: 729d739d26954df47aed45f19f1efce5, type: 3}
+  CharacterPrefab: {fileID: 5028179690552125141, guid: 89156009d3058d9449feb9a78e2c35cc, type: 3}
   Spawn: {fileID: 0}
