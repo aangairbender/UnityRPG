@@ -39,10 +39,27 @@ public class PlayerController : NetworkBehaviour
         else verticalSpeed -= gravity * Time.deltaTime;
 
         Vector3 gravityMove = new Vector3(0, verticalSpeed, 0);
-        Vector3 move = transform.forward * verticalMove + transform.right * horizontalMove;
-        characterController.Move(speed * Time.deltaTime * move + gravityMove * Time.deltaTime);
+        Vector3 move = CameraForward() * verticalMove + CameraRight() * horizontalMove;
 
+        characterController.Move(speed * Time.deltaTime * move + gravityMove * Time.deltaTime);
         animator.SetBool("move", verticalMove != 0 || horizontalMove != 0);
+        
+        if (move.sqrMagnitude < 0.01f) return;
+        transform.rotation = Quaternion.LookRotation(move);
+    }
+
+    private Vector3 CameraForward()
+    {
+        var forward = camera.transform.forward;
+        forward.y = 0f;
+        return forward.normalized;
+    }
+
+    private Vector3 CameraRight()
+    {
+        var right = camera.transform.right;
+        right.y = 0f;
+        return right.normalized;
     }
 
     private void Think()
