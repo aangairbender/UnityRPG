@@ -42,6 +42,7 @@ public class Player : NetworkBehaviour
     {
         var character = Instantiate(CharacterPrefab, new Vector3(0, 1, 0), Quaternion.identity);
         NetworkServer.Spawn(character, connectionToClient);
+        character.GetComponent<Character>().SetName("Test name");
         LinkCharacter(character);
     }
 

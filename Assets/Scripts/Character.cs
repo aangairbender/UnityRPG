@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Data;
 using Mirror;
+using TMPro;
 
 [RequireComponent(typeof(CharacterController))]
 public class Character : NetworkBehaviour
@@ -14,9 +15,12 @@ public class Character : NetworkBehaviour
     [Header("Dependencies")]
     public Camera camera;
     public Animator animator;
+    public TextMeshProUGUI characterNameText;
 
     private Vector3 verticalVelocity = Vector3.zero;
     private CharacterController characterController;
+
+    [SyncVar] private string name;
 
     [SyncVar] [SerializeField] private bool isWalking;
     [SyncVar] [SerializeField] private bool isRunning;
@@ -27,6 +31,11 @@ public class Character : NetworkBehaviour
         characterController = GetComponent<CharacterController>();
         characterController.enabled = hasAuthority;
         camera.gameObject.SetActive(hasAuthority);
+        characterNameText.enabled = !hasAuthority;
+        if (hasAuthority)
+        {
+            camera.gameObject.tag = "MainCamera";
+        }
     }
 
     void FixedUpdate()
@@ -40,6 +49,12 @@ public class Character : NetworkBehaviour
     void LateUpdate()
     {
         UpdateAnimator();
+        UpdateDisplayedName();
+    }
+
+    public void SetName(string name)
+    {
+        this.name = name;
     }
 
     private void HandleInput()
@@ -103,5 +118,13 @@ public class Character : NetworkBehaviour
         animator.SetBool("walk", isWalking);
         animator.SetBool("run", isRunning);
         animator.SetBool("jump", isJumping);
+    }
+
+    private void UpdateDisplayedName()
+    {
+        if (characterNameText.text != name)
+        {
+            characterNameText.text = name;
+        }
     }
 }
